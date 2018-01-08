@@ -14,10 +14,11 @@ import java.util.Iterator;
 import java.util.List;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Utility;
+import edu.wpi.first.wpilibj.Timer; 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+@SuppressWarnings("deprecation")
 public class ActionRecorder
 {
 	private static final String autoDirName = "/home/lvuser/auto";
@@ -346,7 +347,7 @@ public class ActionRecorder
 		{
 			System.out.println("Creating Iterator for " + driverInputs.size() + " inputs");
 			playbackIterator=driverInputs.iterator();
-			playbackStart=Utility.getFPGATime();
+			playbackStart=RobotController.getFPGATime();
 		}
 
 		if (playbackIterator.hasNext())
@@ -355,7 +356,7 @@ public class ActionRecorder
 			
 //			System.out.println("input time offset is " + input.getTimeOffset());
 
-			double delayForPlayback=((double)(playbackStart+input.getTimeOffset() - Utility.getFPGATime()))/1000000.0;
+			double delayForPlayback=((double)(playbackStart+input.getTimeOffset() - RobotController.getFPGATime()))/1000000.0;
 //			System.out.println("Delay before input is " + delayForPlayback);
 
 			if (delayForPlayback > 0)
@@ -364,7 +365,7 @@ public class ActionRecorder
 			}
 			
 			long expectedTime=playbackStart+input.getTimeOffset();
-			long timeError=Utility.getFPGATime() - expectedTime;
+			long timeError=RobotController.getFPGATime() - expectedTime;
 			
 			Sx += expectedTime;
 			Sx2 += (expectedTime*expectedTime);
