@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
@@ -42,10 +44,20 @@ public class Robot extends IterativeRobot {
 	private Joystick driverLeft;
 	private Joystick driverRight;
 	
+	private SpeedController frontLeftSpeed;
+	private SpeedController frontRightSpeed;
+	private SpeedController backLeftSpeed;
+	private SpeedController backRightSpeed;
+	
+	private SpeedControllerGroup leftSpeed;
+	private SpeedControllerGroup rightSpeed;
+	
 	private DifferentialDrive drive;
 	
 	int autoLoopCounter;
 	ActionRecorder actions;
+	
+//	8========================================================================D		dicks
 	
 	@Override
 	public void robotInit() {
@@ -53,7 +65,10 @@ public class Robot extends IterativeRobot {
 		driverLeft = new Joystick(0);
 		driverRight = new Joystick(1);
 		xbox = new XboxController(2);
-//		drive = new DifferentialDrive(/*WE DON'T KNOW HOW MANY SPEED CONTROLLERS WE'RE GONNA HAVE YET*/);
+		
+		leftSpeed = new SpeedControllerGroup(frontLeftSpeed, backLeftSpeed);
+		rightSpeed = new SpeedControllerGroup(frontRightSpeed, backRightSpeed);
+		drive = new DifferentialDrive(leftSpeed, rightSpeed);
 	
 	}
 
@@ -136,7 +151,9 @@ public class Robot extends IterativeRobot {
 	
 	public void readInput() {
 		
-		
+		if (driverLeft.getRawAxis(1) > 0) leftSpeed.set(.99);
+		else if (driverRight.getRawAxis(1) > 0) rightSpeed.set(.99);
+		else leftSpeed.set(0);
 		
 	}
 
