@@ -57,8 +57,6 @@ public class Robot extends IterativeRobot {
 	int autoLoopCounter;
 	ActionRecorder actions;
 	
-//	8========================================================================D		dicks
-	
 	@Override
 	public void robotInit() {
 	
