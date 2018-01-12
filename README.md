@@ -1,3 +1,1 @@
-Power Up
-
-This year's FRC repositiory
+Code for Falcon Robotics' 2018 Robot
